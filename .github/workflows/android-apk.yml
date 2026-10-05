@@ -20,7 +20,11 @@ jobs:
 
       - name: Fix Flutter package name
         run: |
-          sed -i 's/^name: .*/name: unique_outlet_app/' pubspec.yaml
+          if [ -f pubspec.yaml ]; then
+            sed -i 's/^name: .*/name: unique_outlet_app/' pubspec.yaml
+          fi
+          echo "Checking pubspec:"
+          grep '^name:' pubspec.yaml
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -31,7 +35,7 @@ jobs:
       - name: Prepare Android project
         run: |
           rm -rf android
-          flutter create --platforms=android .
+          flutter create --project-name unique_outlet_app --platforms=android .
 
       - name: Get packages
         run: flutter pub get
