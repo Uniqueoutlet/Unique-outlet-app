@@ -18,6 +18,10 @@ jobs:
           cp -r extracted/* .
           cp -r extracted/.[!.]* . 2>/dev/null || true
 
+      - name: Fix Flutter package name
+        run: |
+          sed -i 's/^name: .*/name: unique_outlet_app/' pubspec.yaml
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
